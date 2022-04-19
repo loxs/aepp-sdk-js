@@ -82,12 +82,15 @@ export const genVersionCheckPolicy = (
   versionPromise: Promise<string>,
   geVersion: string,
   ltVersion: string,
+  specificVersions: string[] = [],
 ): PipelinePolicy => ({
   name: 'version-check',
   async sendRequest(request, next) {
     if (new URL(request.url).pathname === ignorePath) return next(request);
     const args = [await versionPromise, geVersion, ltVersion] as const;
-    if (!semverSatisfies(...args)) throw new UnsupportedVersionError(name, ...args);
+    if (!semverSatisfies(...args) && !specificVersions.includes(args[0])) {
+      throw new UnsupportedVersionError(name, ...args);
+    }
     return next(request);
   },
 });

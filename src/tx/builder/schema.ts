@@ -68,11 +68,24 @@ export enum ABI_VERSIONS {
  */
 export enum PROTOCOL_VERSIONS {
   IRIS = 5,
+  CERES = 6,
 }
 
 // First abi/vm by default
 export const PROTOCOL_VM_ABI = {
   [PROTOCOL_VERSIONS.IRIS]: {
+    [Tag.ContractCreateTx]: {
+      vmVersion: [VM_VERSIONS.FATE_2], abiVersion: [ABI_VERSIONS.FATE],
+    },
+    // TODO: Ensure that AEVM (SOPHIA?) is still available here
+    [Tag.ContractCallTx]: {
+      vmVersion: [], abiVersion: [ABI_VERSIONS.FATE, ABI_VERSIONS.SOPHIA],
+    },
+    [Tag.OracleRegisterTx]: {
+      vmVersion: [], abiVersion: [ABI_VERSIONS.NO_ABI, ABI_VERSIONS.SOPHIA],
+    },
+  },
+  [PROTOCOL_VERSIONS.CERES]: {
     [Tag.ContractCreateTx]: {
       vmVersion: [VM_VERSIONS.FATE_2], abiVersion: [ABI_VERSIONS.FATE],
     },

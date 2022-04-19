@@ -143,7 +143,7 @@ export default class Node extends (NodeTransformed as unknown as NodeTransformed
     if (!ignoreVersion) {
       const versionPromise = this.getStatus().then(({ nodeVersion }) => nodeVersion);
       this.pipeline.addPolicy(
-        genVersionCheckPolicy('node', '/v3/status', versionPromise, '6.2.0', '7.0.0'),
+        genVersionCheckPolicy('node', '/v3/status', versionPromise, '6.2.0', '7.0.0', ['v0.0.0-hc5']),
       );
     }
     this.intAsString = true;
